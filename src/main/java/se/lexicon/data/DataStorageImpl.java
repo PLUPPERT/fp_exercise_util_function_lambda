@@ -1,6 +1,5 @@
 package se.lexicon.data;
 
-
 import se.lexicon.model.Person;
 import se.lexicon.util.PersonGenerator;
 
@@ -9,13 +8,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-
-/**
- * Create implementations for all methods.
- * I have already provided an implementation for the first method.
- */
 public class DataStorageImpl implements DataStorage {
-
     private static final DataStorage INSTANCE;
 
     static {
@@ -31,7 +24,6 @@ public class DataStorageImpl implements DataStorage {
     static DataStorage getInstance() {
         return INSTANCE;
     }
-
 
     @Override
     public List<Person> findMany(Predicate<Person> filter) {
