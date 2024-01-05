@@ -4,9 +4,7 @@ package se.lexicon.data;
 import se.lexicon.model.Person;
 import se.lexicon.util.PersonGenerator;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -60,30 +58,31 @@ public class DataStorageImpl implements DataStorage {
 
     @Override
     public List<String> findManyAndMapEachToString(Predicate<Person> filter, Function<Person, String> personToString) {
-        //todo: implement the method
-        /*List<Person> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (Person person : findMany(filter)) {
-            if (filter.test(person)) {
-                result.add(findManyAndMapEachToString(p -> p.equals(), personToString));
-            }
-        }*/
-        return null;
+            result.add(personToString.apply(person));
+        }
+        return result;
     }
 
     @Override
     public void findAndDo(Predicate<Person> filter, Consumer<Person> consumer) {
-        //todo: implement the method
+        for (Person person : findMany(filter)) {
+            consumer.accept(person);
+        }
     }
 
     @Override
     public List<Person> findAndSort(Comparator<Person> comparator) {
-        //todo: implement the method
-        return null;
+        List<Person> result = new ArrayList<>(List.copyOf(personList));
+        result.sort(comparator);
+        return result;
     }
 
     @Override
     public List<Person> findAndSort(Predicate<Person> filter, Comparator<Person> comparator) {
-        //todo: implement the method
-        return null;
+        List<Person> result = findMany(filter);
+        result.sort(comparator);
+        return result;
     }
 }
