@@ -6,6 +6,7 @@ import se.lexicon.model.Person;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.ToIntFunction;
 
@@ -111,42 +112,57 @@ public class Exercises {
     }
 
     /*
-        TODO:  8.	Using findAndDo() print out all people with firstName “Ulf”.
+        8.	Using findAndDo() print out all people with firstName “Ulf”.
      */
     public static void exercise8(String message) {
         System.out.println(message);
         //Write your code here
-
+        storage.findAndDo(
+                person -> person.getFirstName().equals("Ulf"),
+                System.out::println
+        );
         System.out.println("----------------------");
     }
 
     /*
-        TODO:  9.	Using findAndDo() print out everyone who have their lastName contain their firstName.
+        9.	Using findAndDo() print out everyone who have their lastName contain their firstName.
      */
     public static void exercise9(String message) {
         System.out.println(message);
         //Write your code here
-
+        storage.findAndDo(
+                person -> person.getLastName().toLowerCase().contains(person.getFirstName().toLowerCase()),
+                System.out::println
+        );
         System.out.println("----------------------");
     }
 
     /*
-        TODO:  10.	Using findAndDo() print out the firstName and lastName of everyone whose firstName is a palindrome.
+        10.	Using findAndDo() print out the firstName and lastName of everyone whose firstName is a palindrome.
      */
     public static void exercise10(String message) {
         System.out.println(message);
         //Write your code here
 
+        storage.findAndDo(
+                person -> person.getFirstName().equalsIgnoreCase(new StringBuilder(person.getFirstName()).reverse().toString()),
+                System.out::println
+        );
         System.out.println("----------------------");
     }
 
     /*
-        TODO:  11.	Using findAndSort() find everyone whose firstName starts with A sorted by birthdate.
+        11.	Using findAndSort() find everyone whose firstName starts with A sorted by birthdate.
      */
     public static void exercise11(String message) {
         System.out.println(message);
         //Write your code here
-
+        for (Person person : storage.findAndSort(
+                person -> person.getFirstName().startsWith("A"),
+                Comparator.comparing(Person::getBirthDate)
+        )) {
+            System.out.println(person);
+        }
         System.out.println("----------------------");
     }
 
