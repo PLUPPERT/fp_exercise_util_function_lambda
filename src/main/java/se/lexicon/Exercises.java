@@ -12,8 +12,11 @@ import java.util.function.ToIntFunction;
 
 public class Exercises {
 
-    private final static DataStorage storage = DataStorage.INSTANCE;
-
+    private static final DataStorage storage = DataStorage.INSTANCE;
+//    printedDottedLine = () -> System.out.println("----------------------");
+    public static void printDottedLine() {
+        System.out.println("----------------------");
+    }
     /*
        1.	Find everyone that has firstName: “Erik” using findMany().
     */
@@ -23,9 +26,8 @@ public class Exercises {
         for (Person p : storage.findMany((person -> Objects.equals(person.getFirstName(), "Erik")))) {
             System.out.println(p);
         }
-        System.out.println("----------------------");
+        printDottedLine();
     }
-
     /*
         2.  Find all females in the collection using findMany().
      */
@@ -35,7 +37,7 @@ public class Exercises {
         for (Person p : storage.findMany((person -> Objects.equals(person.getGender(), Gender.FEMALE)))) {
             System.out.println(p);
         }
-        System.out.println("----------------------");
+        printDottedLine();
     }
 
     /*
@@ -47,7 +49,7 @@ public class Exercises {
         for (Person p : storage.findMany((person -> person.getBirthDate().isAfter(LocalDate.parse("1999-12-31"))))) {
             System.out.println(p);
         }
-        System.out.println("----------------------");
+        printDottedLine();
     }
 
     /*
@@ -57,7 +59,7 @@ public class Exercises {
         System.out.println(message);
         //Write your code here
         System.out.println(storage.findOne((person -> person.getId() == 123)));
-        System.out.println("----------------------");
+        printDottedLine();
 
     }
 
@@ -72,7 +74,7 @@ public class Exercises {
                 person -> person.getId() == 456,
                 person -> "Name: " + person.getFirstName() + " " + person.getLastName() + " born " + person.getBirthDate())
         );
-        System.out.println("----------------------");
+        printDottedLine();
     }
 
     /*
@@ -88,7 +90,7 @@ public class Exercises {
             System.out.println(s);
         }
 
-        System.out.println("----------------------");
+        printDottedLine();
     }
 
     /*
@@ -108,7 +110,7 @@ public class Exercises {
             System.out.println(s);
         }
 
-        System.out.println("----------------------");
+        printDottedLine();
     }
 
     /*
@@ -121,7 +123,7 @@ public class Exercises {
                 person -> person.getFirstName().equals("Ulf"),
                 System.out::println
         );
-        System.out.println("----------------------");
+        printDottedLine();
     }
 
     /*
@@ -134,7 +136,7 @@ public class Exercises {
                 person -> person.getLastName().toLowerCase().contains(person.getFirstName().toLowerCase()),
                 System.out::println
         );
-        System.out.println("----------------------");
+        printDottedLine();
     }
 
     /*
@@ -148,7 +150,7 @@ public class Exercises {
                 person -> person.getFirstName().equalsIgnoreCase(new StringBuilder(person.getFirstName()).reverse().toString()),
                 System.out::println
         );
-        System.out.println("----------------------");
+        printDottedLine();
     }
 
     /*
@@ -163,26 +165,37 @@ public class Exercises {
         )) {
             System.out.println(person);
         }
-        System.out.println("----------------------");
+        printDottedLine();
     }
 
     /*
-        TODO:  12.	Using findAndSort() find everyone born before 1950 sorted reversed by lastest to earliest.
+        12.	Using findAndSort() find everyone born before 1950 sorted reversed by lastest to earliest.
      */
     public static void exercise12(String message) {
         System.out.println(message);
         //Write your code here
-
-        System.out.println("----------------------");
+        for (Person person : storage.findAndSort(
+                person -> person.getBirthDate().isBefore(LocalDate.parse("1950-01-01")),
+                Comparator.comparing(Person::getBirthDate).reversed()
+        )) {
+            System.out.println(person);
+        }
+        printDottedLine();
     }
 
     /*
-        TODO:  13.	Using findAndSort() find everyone sorted in following order: lastName > firstName > birthDate.
+        13.	Using findAndSort() find everyone sorted in following order: lastName > firstName > birthDate.
      */
     public static void exercise13(String message) {
         System.out.println(message);
         //Write your code here
-
-        System.out.println("----------------------");
+        for (Person person : storage.findAndSort(Comparator
+                .comparing(Person::getLastName)
+                .thenComparing(Person::getFirstName)
+                .thenComparing(Person::getBirthDate)
+        )) {
+            System.out.println(person);
+        }
+        printDottedLine();
     }
 }
