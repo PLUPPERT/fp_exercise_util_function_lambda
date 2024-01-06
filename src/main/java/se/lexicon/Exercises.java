@@ -5,7 +5,9 @@ import se.lexicon.model.Gender;
 import se.lexicon.model.Person;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+import java.util.function.ToIntFunction;
 
 public class Exercises {
 
@@ -73,22 +75,37 @@ public class Exercises {
     }
 
     /*
-        TODO:  6.	Find all male people whose names start with “E” and convert each to a String using findManyAndMapEachToString().
+        6.	Find all male people whose names start with “E” and convert each to a String using findManyAndMapEachToString().
      */
     public static void exercise6(String message) {
         System.out.println(message);
         //Write your code here
+        for (String s : storage.findManyAndMapEachToString(
+                person -> (Objects.equals(person.getGender(), Gender.MALE) && person.getFirstName().startsWith("E")),
+                person -> "Name: " + person.getFirstName() + " " + person.getLastName() + " born " + person.getBirthDate()
+        )) {
+            System.out.println(s);
+        }
 
         System.out.println("----------------------");
     }
 
     /*
-        TODO:  7.	Find all people who are below age of 10 and convert them to a String like this:
+        7.	Find all people who are below age of 10 and convert them to a String like this:
             “Olle Svensson 9 years”. Use findManyAndMapEachToString() method.
      */
     public static void exercise7(String message) {
         System.out.println(message);
         //Write your code here
+        ToIntFunction<LocalDate> years = birthDate -> Math.toIntExact(birthDate.until(LocalDate.now(), ChronoUnit.YEARS));
+        for (String s : storage.findManyAndMapEachToString(
+                person -> years.applyAsInt(person.getBirthDate()) < 10,
+                person -> person.getFirstName() + " " +
+                        person.getLastName()+ " " +
+                        years.applyAsInt(person.getBirthDate()) + " years"
+        )) {
+            System.out.println(s);
+        }
 
         System.out.println("----------------------");
     }
