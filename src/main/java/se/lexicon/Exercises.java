@@ -4,6 +4,7 @@ import se.lexicon.data.DataStorage;
 import se.lexicon.model.Gender;
 import se.lexicon.model.Person;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Exercises {
@@ -23,7 +24,7 @@ public class Exercises {
     }
 
     /*
-        Find all females in the collection using findMany().
+        2.  Find all females in the collection using findMany().
      */
     public static void exercise2(String message) {
         System.out.println(message);
@@ -35,34 +36,39 @@ public class Exercises {
     }
 
     /*
-        TODO:  3.	Find all who are born after (and including) 2000-01-01 using findMany().
+        3.  Find all who are born after (and including) 2000-01-01 using findMany().
      */
     public static void exercise3(String message) {
         System.out.println(message);
         //Write your code here
-
+        for (Person p : storage.findMany((person -> person.getBirthDate().isAfter(LocalDate.parse("1999-12-31"))))) {
+            System.out.println(p);
+        }
         System.out.println("----------------------");
     }
 
     /*
-        TODO: 4.	Find the Person that has an id of 123 using findOne().
+        4.  Find the Person that has an id of 123 using findOne().
      */
     public static void exercise4(String message) {
         System.out.println(message);
         //Write your code here
-
+        System.out.println(storage.findOne((person -> person.getId() == 123)));
         System.out.println("----------------------");
 
     }
 
     /*
-        TODO:  5.	Find the Person that has an id of 456 and convert to String with following content:
+        5.  Find the Person that has an id of 456 and convert to String with following content:
             “Name: Nisse Nilsson born 1999-09-09”. Use findOneAndMapToString().
      */
     public static void exercise5(String message) {
         System.out.println(message);
         //Write your code here
-
+        System.out.println(storage.findOneAndMapToString(
+                person -> person.getId() == 456,
+                person -> "Name: " + person.getFirstName() + " " + person.getLastName() + " born " + person.getBirthDate())
+        );
         System.out.println("----------------------");
     }
 
